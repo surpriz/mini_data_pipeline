@@ -14,6 +14,24 @@ def export_data(df: pd.DataFrame, output_path: str) -> None:
     """Exporte le DataFrame nettoyé dans un fichier CSV."""
     df.to_csv(output_path, index=False)
 
+def transform_data(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Effectue une transformation simple (ex: suppression des NaN) et calcule des métriques.
+    
+    Args:
+        df: DataFrame source
+    Returns:
+        DataFrame transformé avec métriques additionnelles
+    """
+    # Nettoyage basique
+    df = df.dropna()
+    
+    # Calcul de métriques
+    df['total_value'] = df['price'] * df['quantity']
+    df['average_price'] = df['price'].mean()
+    
+    return df
+
 if __name__ == "__main__":
     # Points d'entrée
     raw_data_path = "data/raw_data.csv"
